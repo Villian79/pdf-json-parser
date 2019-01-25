@@ -1,0 +1,22 @@
+{
+  "name": "pdf-json-parser",
+  "version": "1.0.0",
+  "description": "Javascript parser to convert pdf tables to JSON",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Villian79/pdf-json-parser.git"
+  },
+  "author": "Igor Vilinchuk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Villian79/pdf-json-parser/issues"
+  },
+  "homepage": "https://github.com/Villian79/pdf-json-parser#readme",
+  "dependencies": {
+    "pdf2json": "^1.1.8"
+  }
+}
