@@ -30,8 +30,27 @@ app.get("/", function(req, res) {
     // pdfParser.loadPDF(path.join(__dirname,"expedia_invoice.pdf"));
     function success(result)
     {
-      res.send(result);
-       console.log(JSON.stringify(result));
+      let resultJSON = {"guestList": []};
+      let headerLength = result.pageTables[1].tables[0].length;
+      
+      for(let i = 1; i < 3; i++){
+        let guest = {};
+        for(let j = 0; j < headerLength; j++){
+          let key = result.pageTables[1].tables[0][j].split(" ").join("");
+          let value = result.pageTables[1].tables[i][j];
+          if(value != ''){
+            guest[key] = value;
+          }
+          
+        }
+
+        resultJSON.guestList.push(guest);
+        console.log(JSON.stringify(guest));
+      }
+
+      
+      res.json(resultJSON);
+      
     }
      
     //Error
@@ -46,6 +65,6 @@ app.get("/", function(req, res) {
 });
 
 app.listen(port, () => {
-  console.log('%s server running on port', app.get('port'));
+  console.log('server running on port', port);
   console.log('  Press CTRL-C to stop\n');
 });
