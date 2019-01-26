@@ -17,6 +17,10 @@
   },
   "homepage": "https://github.com/Villian79/pdf-json-parser#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "path": "^0.12.7",
+    "pdf-table-extractor": "^1.0.3",
     "pdf2json": "^1.1.8"
   }
 }
