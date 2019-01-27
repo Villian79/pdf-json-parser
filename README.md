@@ -12,7 +12,14 @@ Allows to parse pdf files without server connection.
 Consists of two main files in the `client_side` folder: 
 
 `index.html` - outputs pdf file to the screen
+
 `guestlist.js` - includes rendering logic and outputs JSON data from the table to the browser console.
+
+How to run locally on your PC:
+
+1. Make sure that pdf file is located in the same folder as index.html
+
+2. Open `index.html` with FIREFOX browser. If you run locally - Chrome and Opera will throw out cross-origin error which should disappear one you go online
 
 **IMPORTANT:** 
 
