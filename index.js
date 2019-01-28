@@ -20,7 +20,9 @@ app.use(express.static(__dirname + "/public"));
 
 let resultUrl;
 
-
+app.get('/', (req, res) => {
+  res.render('index.ejs');
+});
 
 app.post('/data', (req, res) => {
   if (Object.keys(req.files).length == 0) {
@@ -104,6 +106,6 @@ app.get("/data", function(req, res) {
 
 
 //Change port to process.env.PORT for deployment on heroku
-app.listen(3000, process.env.IP, () => {
+app.listen(process.env.PORT, process.env.IP, () => {
   console.log(`App running at http://localhost:3000`);
 });
