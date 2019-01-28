@@ -7,27 +7,37 @@ const PDFParser = require("pdf2json");
 
 const pdf_table_extractor = require("pdf-table-extractor");
 
+app.set("view engine", "ejs");
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + "/public"));
-const port = 3000;
+
+
+app.get("/home", (req, res) => {
+  res.render("home");
+});
+
+app.get("/about", (req, res) => {
+  res.render("about");
+});
 
 
 app.get("/", function(req, res) {
 
-    // let pdfParser = new PDFParser(this,1);
+    let pdfParser = new PDFParser(this,1);
 
-    // pdfParser.on("pdfParser_dataError", errData => console.error(errData.parserError) );
-    // pdfParser.on("pdfParser_dataReady", pdfData => {
-    //     // fs.writeFile(path.join(__dirname,"sample.txt"), pdfParser.getRawTextContent(), err => {
-    //     //   if(err) throw err;
-    //     //   console.log('Data has been recorded...');
-    //     // });
-    //     res.json(pdfData.formImage.Pages[1]);
-    // });
+    pdfParser.on("pdfParser_dataError", errData => console.error(errData.parserError) );
+    pdfParser.on("pdfParser_dataReady", pdfData => {
+        // fs.writeFile(path.join(__dirname,"sample.txt"), pdfParser.getRawTextContent(), err => {
+        //   if(err) throw err;
+        //   console.log('Data has been recorded...');
+        // });
+        res.json(pdfData.formImage.Pages[1]);
+    });
 
-    // pdfParser.loadPDF(path.join(__dirname,"expedia_invoice.pdf"));
+    pdfParser.loadPDF(path.join("https://drive.google.com/open?id=1Py7L32OEABJbV4lsMJW1hcfszER4kHgH"));
     function success(result)
     {
       let resultJSON = {"guestList": []};
@@ -64,7 +74,8 @@ app.get("/", function(req, res) {
 
 });
 
-app.listen(port, () => {
-  console.log('server running on port', port);
+app.listen(3000, process.env.IP, () => {
+
+  console.log('Server running on port: ' + process.env.PORT);
   console.log('  Press CTRL-C to stop\n');
 });
