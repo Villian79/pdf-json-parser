@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
 const path = require('path');
 const fs = require("fs");
 const PDFParser = require("pdf2json");
@@ -13,36 +14,60 @@ app.engine('html', require('ejs').renderFile);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(fileUpload());
 
 app.use(express.static(__dirname + "/public"));
 
-app.get("/home", (req, res) => {
-  res.render("home");
+let resultUrl;
+
+
+
+app.post('/data', (req, res) => {
+  if (Object.keys(req.files).length == 0) {
+    console.log('No files were uploaded.');
+    return res.status(400).send('No files were uploaded.');
+  }
+
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+  let sampleFile = req.files.sampleFile;
+  console.log(sampleFile);
+
+  // Use the mv() method to place the file somewhere on your server
+  sampleFile.mv('img/invoice.pdf', function(err) {
+    if (err){
+      return res.status(500).send(err);
+    } 
+    console.log('File uploaded!');
+  });
+
+  res.redirect('/data');
 });
 
-app.get("/about", (req, res) => {
-  res.render("about");
-});
-
-app.get('/input', function (req, res) {
-  res.render('input.html');
-});
+app.get('/data/new', (req, res) => {
+  res.render('input');
+})
 
 
-app.get("/", function(req, res) {
+app.get("/data", function(req, res) {
+    console.log(resultUrl);
 
-    let pdfParser = new PDFParser(this,1);
+    // Logic for pdf2json module
+    // --------------------------------------
+    // let pdfParser = new PDFParser(this,1);
 
-    pdfParser.on("pdfParser_dataError", errData => console.error(errData.parserError) );
-    pdfParser.on("pdfParser_dataReady", pdfData => {
+    // pdfParser.on("pdfParser_dataError", errData => console.error(errData.parserError) );
+    // pdfParser.on("pdfParser_dataReady", pdfData => {
         // fs.writeFile(path.join(__dirname,"sample.txt"), pdfParser.getRawTextContent(), err => {
         //   if(err) throw err;
         //   console.log('Data has been recorded...');
         // });
-        res.json(pdfData.formImage.Pages[1]);
-    });
+    //     res.json(pdfData.formImage.Pages[1]);
+    // });
 
-    pdfParser.loadPDF(path.join("https://drive.google.com/open?id=1Py7L32OEABJbV4lsMJW1hcfszER4kHgH"));
+    // pdfParser.loadPDF(path.join(resultUrl));
+
+
+    //Logic for pdf-table-extracto module
     function success(result)
     {
       let resultJSON = {"guestList": []};
@@ -60,7 +85,7 @@ app.get("/", function(req, res) {
         }
 
         resultJSON.guestList.push(guest);
-        console.log(JSON.stringify(guest));
+        // console.log(JSON.stringify(guest));
       }
 
       
@@ -74,9 +99,11 @@ app.get("/", function(req, res) {
        console.error('Error: ' + err);
     }
      
-    pdf_table_extractor(path.join(__dirname,"expedia_invoice.pdf"),success,error);
-
-
+    pdf_table_extractor(path.join(__dirname,"/img/invoice.pdf"),success,error);
 });
+
+
 //Change port to process.env.PORT for deployment on heroku
-app.listen(3000, process.env.IP);
+app.listen(3000, process.env.IP, () => {
+  console.log(`App running at http://localhost:3000`);
+});
