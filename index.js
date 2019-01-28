@@ -35,14 +35,14 @@ app.post('/data', (req, res) => {
   console.log(sampleFile);
 
   // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv(path.join(__dirname,"/img/invoice.pdf"), function(err) {
+  sampleFile.mv("/img/invoice.pdf", function(err) {
     if (err){
       return res.status(500).send(err);
     } 
     console.log('File uploaded!');
   });
 
-  res.redirect('/data');
+  res.redirect(path.join(__dirname,'/data'));
 });
 
 app.get('/data/new', (req, res) => {
