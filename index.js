@@ -35,7 +35,7 @@ app.post('/data', (req, res) => {
   console.log(sampleFile);
 
   // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv('img/invoice.pdf', function(err) {
+  sampleFile.mv(path.join(__dirname,"/img/invoice.pdf"), function(err) {
     if (err){
       return res.status(500).send(err);
     } 
