@@ -23,6 +23,10 @@ app.get("/about", (req, res) => {
   res.render("about");
 });
 
+app.post("/", function(req, res){
+  console.log(req);
+});
+
 
 app.get("/", function(req, res) {
 
@@ -73,5 +77,5 @@ app.get("/", function(req, res) {
 
 
 });
-
+//Change port to process.env.PORT for deployment on heroku
 app.listen(process.env.PORT, process.env.IP);
