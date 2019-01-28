@@ -8,12 +8,13 @@ const PDFParser = require("pdf2json");
 const pdf_table_extractor = require("pdf-table-extractor");
 
 app.set("view engine", "ejs");
+app.set('views', __dirname + '/views');
+app.engine('html', require('ejs').renderFile);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + "/public"));
-
 
 app.get("/home", (req, res) => {
   res.render("home");
@@ -23,8 +24,8 @@ app.get("/about", (req, res) => {
   res.render("about");
 });
 
-app.post("/", function(req, res){
-  console.log(req);
+app.get('/input', function (req, res) {
+  res.render('input.html');
 });
 
 
@@ -78,4 +79,4 @@ app.get("/", function(req, res) {
 
 });
 //Change port to process.env.PORT for deployment on heroku
-app.listen(process.env.PORT, process.env.IP);
+app.listen(3000, process.env.IP);
