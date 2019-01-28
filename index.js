@@ -74,7 +74,4 @@ app.get("/", function(req, res) {
 
 });
 
-app.listen(process.env.PORT, process.env.IP, () => {
-
-  console.log('  Press CTRL-C to stop\n');
-});
+app.listen(process.env.PORT, process.env.IP);
