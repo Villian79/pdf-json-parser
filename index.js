@@ -101,7 +101,7 @@ app.get("/data", function(req, res) {
        console.error('Error: ' + err);
     }
      
-    pdf_table_extractor(path.join(__dirname,"/img/invoice.pdf"),success,error);
+    pdf_table_extractor("/img/invoice.pdf",success,error);
 });
 
 
