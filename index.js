@@ -35,7 +35,7 @@ app.post('/data', (req, res) => {
   console.log(sampleFile);
 
   // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv("/img/invoice.pdf", function(err) {
+  sampleFile.mv("img/invoice.pdf", function(err) {
     if (err){
       return res.status(500).send(err);
     } 
@@ -101,7 +101,7 @@ app.get("/data", function(req, res) {
        console.error('Error: ' + err);
     }
      
-    pdf_table_extractor("/img/invoice.pdf",success,error);
+    pdf_table_extractor(path.join(__dirname, "/img/invoice.pdf"),success,error);
 });
 
 
