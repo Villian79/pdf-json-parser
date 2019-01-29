@@ -25,6 +25,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/data', (req, res) => {
+  res.send(req);
   if (Object.keys(req.files).length == 0) {
     console.log('No files were uploaded.');
     return res.status(400).send('No files were uploaded.');
