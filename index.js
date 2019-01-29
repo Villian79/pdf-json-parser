@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/data', (req, res) => {
-  res.send(req);
+  
   if (Object.keys(req.files).length == 0) {
     console.log('No files were uploaded.');
     return res.status(400).send('No files were uploaded.');
@@ -102,11 +102,11 @@ app.get("/data", function(req, res) {
        console.error('Error: ' + err);
     }
      
-    pdf_table_extractor(path.join(__dirname, "/img/invoice.pdf"),success,error);
+    pdf_table_extractor('img/invoice.pdf',success,error);
 });
 
 
 //Change port to process.env.PORT for deployment on heroku
-app.listen(process.env.PORT, process.env.IP, () => {
+app.listen(3000, process.env.IP, () => {
   console.log(`App running at http://localhost:3000`);
 });
