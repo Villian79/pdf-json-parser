@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Villian79/pdf-json-parser#readme",
   "dependencies": {
+    "@google-cloud/storage": "^2.4.0",
     "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
